@@ -7,23 +7,21 @@
 		<Sections>
 
 			<Section>
-				<Header>Goodwin Reservoir Temperature</Header>
+				<Header>Goodwin Reservoir Outflow Temperature</Header>
+				<Object>
+					<Type>textbox</Type>
+					<Text>Reservoir outflow temperature figures compare simulated and observed temperature time series from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature. In certain instances, time series for multiple years are shown to indicate comparison of observed data and model simulations for longer time periods. </Text>
+				</Object>
 				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Goodwin Outflow Temperature %%year%%</Description>
+					<Description>Goodwin Reservoir hourly outflow temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -96,116 +94,104 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Goodwin Outflow Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Goodwin Reservoir hourly outflow temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Goodwin Reservoir hourly outflow temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Goodwin Outflow Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Goodwin Reservoir hourly outflow temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -214,42 +200,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Goodwin Outflow Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Goodwin Reservoir hourly outflow temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -258,42 +230,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Goodwin Outflow Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Goodwin Reservoir hourly outflow temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -302,42 +260,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Goodwin Outflow Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Goodwin Reservoir hourly outflow temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/GOODWIN_GOOD1/TEMP-WATER//1HOUR/GRAB2-RESAMPLE-EDIT/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -359,21 +303,19 @@
 			<Section>
 				<Header>Stanislaus River at Goodwin Canyon Temperature</Header>
 				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
+				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at Goodwin Canyon Temperature %%year%%</Description>
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -446,116 +388,104 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -564,42 +494,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -608,42 +524,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -652,42 +554,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Goodwin Canyon hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/CDEC/GDC_STANISLAUS_R_AT_GOODWIN CANYON/TEMP-WATER//1HOUR/CDEC-RAW/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/Stanislaus_Observed_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -699,14 +587,18 @@
 			<Section>
 				<Header>Stanislaus River at Goodwin Canyon Flow</Header>
 				<Object>
+					<Type>textbox</Type>
+					<Text>River flow figures compare simulated and observed flow time series from January through December to aid calibration.  Time (date) is represented on the x-axis and flow (cfs) is represented on the y-axis. Two lines are included in the figures: observed (dark blue) and simulated (dark red dashed) daily average flow. In certain instances, time series for multiple years are shown to indicate comparison of observed data and model simulations for longer time periods.</Text>
+				</Object>
+				<Object>
 					<Type>TimeSeriesPlot</Type>
-					<Title>Stanislaus River at Goodwin Canyon Flow %%year%%</Title>
-					<Description>Stanislaus River at Goodwin Canyon Flow %%year%%</Description>
+					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
+					<Description>Stanislaus River at Goodwin Canyon flow, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_Q.xml</Template>	
+					<unitsystem>english</unitsystem>
 					<ylabel>Flow (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
-					<unitsystem>english</unitsystem>
-					<includeallyears>True</includeallyears><!--Phase1-->
-					<yearblocks>10</yearblocks>
+					<includeallyears>true</includeallyears>
 					<Lines>
 						<line>
 							<label>Computed</label>
@@ -741,57 +633,26 @@
 				</Object>
 				<Object>
 					<Type>ErrorStatisticsTable</Type>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_Q.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Flow Error Statistics</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Goodwin Canyon flow, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 150 %%units%%, MAE: %%gt%%300 %%units%%, RMSE: %%gt%%500 %%units%%, NSE: %%lt%%0.65). ResSim.</Description>									
+					<Parameter>flow</Parameter>
+					<SplitByYear>True</SplitByYear>
 					<unitsystem>english</unitsystem>
-					<includeallyears>true</includeallyears>
-					<splitbyyear>true</splitbyyear>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-							<stats>
-								<stat>meanbias</stat>
-								<stat>MAE</stat>
-								<stat>RMSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-							<stats>
-								<stat>meanbias</stat>
-								<stat>MAE</stat>
-								<stat>RMSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-							<stats>
-								<stat>NSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-							<stats>
-								<stat>NSE</stat>
-							</stats>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
@@ -800,36 +661,84 @@
 						</DataPath>
 					</DataPaths>
 				</Object>
+				
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_Q.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Goodwin Canyon flow, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Flow</Parameter>
+					<unitsystem>english</unitsystem>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object>
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_MeanBias.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Flow Mean Bias</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Goodwin Canyon flow, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 150 %%units%%). ResSim.</Description>					
+					<Parameter>flow</Parameter>
 					<statistic>meanbias</statistic>
-					<includeallyears>true</includeallyears>
 					<unitsystem>english</unitsystem>
-					<splitbyyear>true</splitbyyear>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
@@ -840,34 +749,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Flow MAE</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Goodwin Canyon flow, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%300 %%units%%). CE-QUAL-W2.</Description>					
+					<Parameter>flow</Parameter>
 					<statistic>MAE</statistic>
-					<includeallyears>true</includeallyears>
-					<splitbyyear>true</splitbyyear>
 					<unitsystem>english</unitsystem>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
@@ -878,34 +781,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Goodwin Canyon Flow RMSE</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Goodwin Canyon flow, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%500 %%units%%). ResSim.</Description>
+					<Parameter>flow</Parameter>
 					<statistic>RMSE</statistic>
-					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
 					<unitsystem>english</unitsystem>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
@@ -914,28 +811,57 @@
 						</DataPath>
 					</DataPaths>
 				</Object>
+				<Object>
+					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_NSE.xml</Template>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>
+					<Description>Stanislaus River at Goodwin Canyon flow, monthly average NSE, shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). CE-QUAL-W2.</Description>
+					<Parameter>flow</Parameter>
+					<statistic>NSE</statistic>
+					<unitsystem>english</unitsystem>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>True</includeallyears>
+					<DataPaths>
+						<DataPath>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>//Stanislaus R below Goodwin Dam/Flow//1HOUR/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>/USBR/STAN_R_BL_GOODWIN_DAM_11302000/FLOW//1DAY/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object>	
 			</Section>
-
 
 
 			<Section>
 				<Header>Stanislaus River at Knights Ferry Temperature</Header>
 				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
+				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at Knights Ferry Temperature %%year%%</Description>
+					<Description>Stanislaus River at Knights Ferry hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -1008,109 +934,91 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Knights Ferry Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Knights Ferry hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<easting>6513264</easting>
 							<northing>2120566</northing>
-							<Interval>1HOUR</Interval>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Knights Ferry hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<easting>6513264</easting>
+							<northing>2120566</northing>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Knights Ferry Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Knights Ferry hourly temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
@@ -1118,10 +1026,12 @@
 							<Interval>1HOUR</Interval>
 							<easting>6513264</easting>
 							<northing>2120566</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1130,42 +1040,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Knights Ferry Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Knights Ferry hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6513264</easting>
 							<northing>2120566</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1174,42 +1070,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Knights Ferry Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Knights Ferry hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6513264</easting>
 							<northing>2120566</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1218,42 +1100,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Knights Ferry Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Knights Ferry hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6513264</easting>
 							<northing>2120566</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/KF1_Knights_Ferry/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1264,23 +1132,21 @@
 
 
 			<Section>
-				<Header>Stanislaus River at Orange Blossom Br Temperature</Header>
+				<Header>Stanislaus River at Orange Blossom Bridge Temperature</Header>
+				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
 				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at Orange Blossom Br Temperature %%year%%</Description>
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -1317,7 +1183,7 @@
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
 							<Type>PER-AVER</Type>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
 							<lineColors>
 								<linecolor>red</linecolor>
@@ -1335,7 +1201,7 @@
 							<Parameter>Temperature</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
 							<lineColors>
 								<linecolor>red</linecolor>
@@ -1353,118 +1219,104 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Orange Blossom Br Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Orange Blossom Br Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1473,42 +1325,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Orange Blossom Br Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1517,42 +1355,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Orange Blossom Br Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1561,42 +1385,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Orange Blossom Br Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Orange Blossom Bridge hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>//Stanislaus R at Orange Blossom Bridge/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Path>//STANISLAUS R AT ORANGE BLOSSOM BRIDGE/TEMP-WATER TEMPERATURE//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OBB_Orange_Blossom_Br/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1607,23 +1417,21 @@
 
 
 			<Section>
-				<Header>Stanislaus River at SOK Oakdale Temperature</Header>
+				<Header>Stanislaus River at Oakdale (SOK) Temperature</Header>
+				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
 				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at SOK Oakdale Temperature %%year%%</Description>
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed Maximum Daily</label>
@@ -1724,109 +1532,91 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at SOK Oakdale Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
-							<Interval>1HOUR</Interval>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<easting>6454186</easting>
+							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at SOK Oakdale Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
@@ -1834,10 +1624,12 @@
 							<Interval>1HOUR</Interval>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1846,42 +1638,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at SOK Oakdale Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1890,42 +1668,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at SOK Oakdale Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1934,42 +1698,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at SOK Oakdale Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale (SOK) hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/SOK_OAKDALE/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -1980,23 +1730,21 @@
 
 
 			<Section>
-				<Header>Stanislaus River at Oakdale Rec Area Temperature</Header>
+				<Header>Stanislaus River at Oakdale Recreation Area Temperature</Header>
+				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
 				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature %%year%%</Description>
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>5</min>
-						<max>25</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -2069,109 +1817,91 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
-							<Interval>1HOUR</Interval>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<easting>6454186</easting>
+							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale Recreation Area temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
@@ -2179,10 +1909,12 @@
 							<Interval>1HOUR</Interval>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -2191,42 +1923,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -2235,42 +1953,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -2279,42 +1983,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Oakdale Rec Area Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Oakdale Recreation Area hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
 							<easting>6454186</easting>
 							<northing>2103058</northing>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
 							<Interval>1HOUR</Interval>
-							<Type>INST-VAL</Type>
+							<Parameter>Temperature</Parameter>
 							<DSS_Path>/USBR/OAKR1_Oakdale_Rec_Area/TEMP-WATER//1HOUR/grab2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
@@ -2322,27 +2012,23 @@
 					</DataPaths>
 				</Object>
 			</Section>
-
-
 
 			<Section>
 				<Header>Stanislaus River at Ripon Temperature</Header>
 				<Object>
+					<Type>textbox</Type>
+					<Text>These figures represent time series compare simulated and observed temperature from January through December to aid calibration.  Time (date) is represented on the x-axis and temperature (%%degrees%%F) is represented on the y-axis. Four lines are included in the figure: observed (light blue) and simulated (red-dashed) hourly water temperature and observed (dark blue) and simulated (dark red dashed) daily average water temperature.</Text>
+				</Object>
+				<Object>
 					<Type>TimeSeriesPlot</Type>
 					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
-					<Description>Stanislaus River at Ripon Temperature %%year%%</Description>
+					<Description>Stanislaus River at Ripon hourly temperature, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_TW.xml</Template>
+					<unitsystem>english</unitsystem>					
 					<ylabel>Temperature (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
 					<yearblocks>10</yearblocks>
-					<yticks>
-						<spacing>2</spacing>
-					</yticks>
-					<xlabel>Date</xlabel>
-					<YLims>
-						<min>0</min>
-						<max>30</max>
-					</YLims>
 					<lines>
 						<line>
 							<label>Observed</label>
@@ -2350,7 +2036,7 @@
 							<Parameter>Temperature</Parameter>
 							<Interval>1HOUR</Interval>
 							<Type>INST-VAL</Type>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<lineColor>#5b9bd5</lineColor>
 							<lineWidth>1</lineWidth>
@@ -2365,7 +2051,7 @@
 							<Parameter>Temperature</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>INST-VAL</Type>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<lineColor>#5b9bd5</lineColor>
 							<lineWidth>1</lineWidth>
@@ -2415,117 +2101,105 @@
 					<Type>ErrorStatisticsTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Temperature Error Statistics</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Ripon hourly temperature, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 1.35%%units%%, MAE: %%gt%%1.80%%units%%, RMSE: %%gt%%2.70%%units%%, NSE: %%lt%%0.65). ResSim.</Description>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_TW.xml</Template>					
 					<Parameter>Temperature</Parameter>
 					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<tablecolors>
-						<tablecolor>
-							<statistic>meanbias</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.75</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-								<threshold>
-									<value>-0.75</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>nse</statistic>
-							<thresholds>
-								<threshold>
-									<value>0.65</value>
-									<colorwhen>under</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>MAE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.0</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-						<tablecolor>
-							<statistic>RMSE</statistic>
-							<thresholds>
-								<threshold>
-									<value>1.5</value>
-									<colorwhen>over</colorwhen>
-								</threshold>
-							</thresholds>
-						</tablecolor>
-					</tablecolors>					
+					<includeallyears>true</includeallyears>				
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
 					</DataPaths>
 				</Object>
-
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_TW.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Ripon hourly temperature, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Temperature</Parameter>
+					<SplitByYear>True</SplitByYear>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<Flag>Computed</Flag>
+							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
+							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<Flag>Observed</Flag>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object> 
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Temperature Outflow Mean Bias, outside performance metric range when +- .75</Description>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MeanBias.xml</Template>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Ripon hourly temperature, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 1.35%%units%%). CE-QUAL-W2.</Description>				
 					<Parameter>Temperature</Parameter>
 					<statistic>meanbias</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>0.75</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-						<threshold>
-							<value>-0.75</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
@@ -2533,43 +2207,29 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Temperature Outflow MAE, outside performance metric range over 1.0</Description>
+					<unitsystem>english</unitsystem>
+					<Description>Stanislaus River at Ripon hourly temperature, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%1.80%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>MAE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.0</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
@@ -2577,43 +2237,29 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Temperature RMSE, outside performance metric range over 1.5</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Ripon hourly temperature, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%2.70%%units%%). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>RMSE</statistic>
 					<splitbyyear>true</splitbyyear>
 					<includeallyears>true</includeallyears>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
-					<thresholds>
-						<threshold>
-							<value>1.5</value>
-							<colorwhen>over</colorwhen>
-						</threshold>
-					</thresholds>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
@@ -2621,43 +2267,29 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_TW_NSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Temperature NSE, outside performance metric range under .65</Description>
+					<unitsystem>english</unitsystem>					
+					<Description>Stanislaus River at Ripon hourly temperature, monthly average NSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). ResSim.</Description>
 					<Parameter>Temperature</Parameter>
 					<statistic>NSE</statistic>
 					<includeallyears>true</includeallyears>
 					<splitbyyear>true</splitbyyear>
-					<thresholds>
-						<threshold>
-							<value>.65</value>
-							<colorwhen>under</colorwhen>
-						</threshold>
-					</thresholds>
-					<numberformats>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
 							<Flag>Computed</Flag>
 							<Parameter>Temperature</Parameter>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
+							<Interval>1HOUR</Interval>
 							<DSS_Path>//Stanislaus R at Ripon/Temp-Water Temperature//1Hour/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0</omitvalue>
 						</DataPath>
 						<DataPath>
 							<Flag>Observed</Flag>
-							<Interval>1DAY</Interval>
-							<Type>INST-VAL</Type>
-							<DSS_Path>/USBR/STAN_R_11303000_RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
+							<Interval>1HOUR</Interval>
+							<Parameter>Temperature</Parameter>
+							<DSS_Path>/USBR/RIPON/TEMP-WATER//1HOUR/GRAB2/</DSS_Path>
 							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
 							<omitvalue>-901.0</omitvalue>
 						</DataPath>
@@ -2668,14 +2300,18 @@
 			<Section>
 				<Header>Stanislaus River at Ripon Flow</Header>
 				<Object>
+					<Type>textbox</Type>
+					<Text>River flow figures compare simulated and observed flow time series from January through December to aid calibration.  Time (date) is represented on the x-axis and flow (cfs) is represented on the y-axis. Two lines are included in the figures: observed (dark blue) and simulated (dark red dashed) daily average flow. In certain instances, time series for multiple years are shown to indicate comparison of observed data and model simulations for longer time periods.</Text>
+				</Object>
+				<Object>
 					<Type>TimeSeriesPlot</Type>
-					<Title>Stanislaus River at Ripon Flow %%year%%</Title>
-					<Description>Stanislaus River at Ripon Flow %%year%%</Description>
+					<Title>%%region%%, Simulation: %%SimulationName%% %%year%%</Title>
+					<Description>Stanislaus River at Ripon flow, %%year%%. ResSim.</Description>
+					<Template>format/templates/Plot_Defaults_STA_Q.xml</Template>	
+					<unitsystem>english</unitsystem>
 					<ylabel>Flow (%%units%%)</ylabel>
 					<splitbyyear>true</splitbyyear>
-					<unitsystem>english</unitsystem>
-					<includeallyears>True</includeallyears><!--Phase1-->
-					<yearblocks>10</yearblocks>
+					<includeallyears>true</includeallyears>
 					<Lines>
 						<line>
 							<label>Computed</label>
@@ -2710,57 +2346,26 @@
 				</Object>
 				<Object>
 					<Type>ErrorStatisticsTable</Type>
+					<Template>format/templates/ErrorStatisticsTable_Defaults_Q.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Flow Error Statistics</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Ripon flow, annual performance statistics, shaded gray cells with an asterisk are outside the model performance metric range (mean bias: +/- 150 %%units%%, MAE: %%gt%%300 %%units%%, RMSE: %%gt%%500 %%units%%, NSE: %%lt%%0.65). ResSim.</Description>									
+					<Parameter>flow</Parameter>
+					<SplitByYear>True</SplitByYear>
 					<unitsystem>english</unitsystem>
-					<includeallyears>true</includeallyears>
-					<splitbyyear>true</splitbyyear>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-							<stats>
-								<stat>meanbias</stat>
-								<stat>MAE</stat>
-								<stat>RMSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-							<stats>
-								<stat>meanbias</stat>
-								<stat>MAE</stat>
-								<stat>RMSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<min>1</min>
-							<decimalplaces>1</decimalplaces>
-							<stats>
-								<stat>NSE</stat>
-							</stats>
-						</numberformat>
-						<numberformat>
-							<max>1</max>
-							<decimalplaces>2</decimalplaces>
-							<stats>
-								<stat>NSE</stat>
-							</stats>
-						</numberformat>
-					</numberformats>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
@@ -2769,36 +2374,84 @@
 						</DataPath>
 					</DataPaths>
 				</Object>
+				
+				<Object>
+					<Type>MonthlyStatisticsTable</Type>
+					<Template>format/templates/MonthlyStatisticsTable_Q.xml</Template>
+					<unitsystem>english</unitsystem>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>					
+					<Description>Stanislaus River at Ripon flow, monthly means (%%units%%) and counts. ResSim.</Description>
+					<Parameter>Flow</Parameter>
+					<unitsystem>english</unitsystem>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
+					<Rows>
+						<Row>Jan|%%MEAN.Observed.MONTH=JAN%%|%%MEAN.Computed.MONTH=JAN%%|%%COUNT.Observed.MONTH=JAN%%|%%COUNT.Computed.MONTH=JAN%%</Row>
+						<Row>Feb|%%MEAN.Observed.MONTH=FEB%%|%%MEAN.Computed.MONTH=FEB%%|%%COUNT.Observed.MONTH=FEB%%|%%COUNT.Computed.MONTH=FEB%%</Row>
+						<Row>Mar|%%MEAN.Observed.MONTH=MAR%%|%%MEAN.Computed.MONTH=MAR%%|%%COUNT.Observed.MONTH=MAR%%|%%COUNT.Computed.MONTH=MAR%%</Row>
+						<Row>Apr|%%MEAN.Observed.MONTH=APR%%|%%MEAN.Computed.MONTH=APR%%|%%COUNT.Observed.MONTH=APR%%|%%COUNT.Computed.MONTH=APR%%</Row>
+						<Row>May|%%MEAN.Observed.MONTH=MAY%%|%%MEAN.Computed.MONTH=MAY%%|%%COUNT.Observed.MONTH=MAY%%|%%COUNT.Computed.MONTH=MAY%%</Row>
+						<Row>Jun|%%MEAN.Observed.MONTH=JUN%%|%%MEAN.Computed.MONTH=JUN%%|%%COUNT.Observed.MONTH=JUN%%|%%COUNT.Computed.MONTH=JUN%%</Row>
+						<Row>Jul|%%MEAN.Observed.MONTH=JUL%%|%%MEAN.Computed.MONTH=JUL%%|%%COUNT.Observed.MONTH=JUL%%|%%COUNT.Computed.MONTH=JUL%%</Row>
+						<Row>Aug|%%MEAN.Observed.MONTH=AUG%%|%%MEAN.Computed.MONTH=AUG%%|%%COUNT.Observed.MONTH=AUG%%|%%COUNT.Computed.MONTH=AUG%%</Row>
+						<Row>Sep|%%MEAN.Observed.MONTH=SEP%%|%%MEAN.Computed.MONTH=SEP%%|%%COUNT.Observed.MONTH=SEP%%|%%COUNT.Computed.MONTH=SEP%%</Row>
+						<Row>Oct|%%MEAN.Observed.MONTH=OCT%%|%%MEAN.Computed.MONTH=OCT%%|%%COUNT.Observed.MONTH=OCT%%|%%COUNT.Computed.MONTH=OCT%%</Row>
+						<Row>Nov|%%MEAN.Observed.MONTH=NOV%%|%%MEAN.Computed.MONTH=NOV%%|%%COUNT.Observed.MONTH=NOV%%|%%COUNT.Computed.MONTH=NOV%%</Row>
+						<Row>Dec|%%MEAN.Observed.MONTH=DEC%%|%%MEAN.Computed.MONTH=DEC%%|%%COUNT.Observed.MONTH=DEC%%|%%COUNT.Computed.MONTH=DEC%%</Row>
+					</Rows>
+					<Headers>
+						<Header>Obs. Mean %%year%%</Header>
+						<Header>Sim. Mean %%year%%</Header>
+						<Header>Obs. Count %%year%%</Header>
+						<Header>Sim. Count %%year%%</Header>
+					</Headers>
+					<DataPaths>
+						<DataPath>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object>
+				
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_MeanBias.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Flow Mean Bias</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Ripon flow, monthly average mean bias (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (+/- 150 %%units%%). ResSim.</Description>					
+					<Parameter>flow</Parameter>
 					<statistic>meanbias</statistic>
-					<includeallyears>true</includeallyears>
 					<unitsystem>english</unitsystem>
-					<splitbyyear>true</splitbyyear>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
@@ -2809,34 +2462,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_MAE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Flow MAE</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Ripon flow, monthly average MAE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%300 %%units%%). CE-QUAL-W2.</Description>					
+					<Parameter>flow</Parameter>
 					<statistic>MAE</statistic>
-					<includeallyears>true</includeallyears>
-					<splitbyyear>true</splitbyyear>
 					<unitsystem>english</unitsystem>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
@@ -2847,34 +2494,28 @@
 				</Object>
 				<Object>
 					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_RMSE.xml</Template>
 					<missingmarker>--</missingmarker>
 					<addasterisk>True</addasterisk>
-					<Description>Stanislaus River at Ripon Flow RMSE</Description>
-					<Parameter>Flow</Parameter>
+					<Description>Stanislaus River at Ripon flow, monthly average RMSE (%%units%%), shaded gray cells with an asterisk are outside the model performance metric range (%%gt%%500 %%units%%). ResSim.</Description>
+					<Parameter>flow</Parameter>
 					<statistic>RMSE</statistic>
-					<splitbyyear>true</splitbyyear>
-					<includeallyears>true</includeallyears>
 					<unitsystem>english</unitsystem>
-					<numberformats>
-						<numberformat>
-							<min>100</min>
-							<decimalplaces>0</decimalplaces>
-						</numberformat>
-						<numberformat>
-							<max>100</max>
-							<decimalplaces>1</decimalplaces>
-						</numberformat>
-					</numberformats>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>true</includeallyears>
 					<DataPaths>
 						<DataPath>
-							<Flag>Computed</Flag>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
 							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
 						</DataPath>
 						<DataPath>
-							<Flag>Observed</Flag>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
 							<Interval>1DAY</Interval>
 							<Type>PER-AVER</Type>
 							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
@@ -2883,6 +2524,38 @@
 						</DataPath>
 					</DataPaths>
 				</Object>
+				<Object>
+					<Type>SingleStatisticTable</Type>
+					<Template>format/templates/SingleStatisticTable_Defaults_Q_NSE.xml</Template>
+					<missingmarker>--</missingmarker>
+					<addasterisk>True</addasterisk>
+					<Description>Stanislaus River at Ripon flow, monthly average NSE, shaded gray cells with an asterisk are outside the model performance metric range (%%lt%%0.65). CE-QUAL-W2.</Description>
+					<Parameter>flow</Parameter>
+					<statistic>NSE</statistic>
+					<unitsystem>english</unitsystem>
+					<SplitByYear>True</SplitByYear>
+					<includeallyears>True</includeallyears>
+					<DataPaths>
+						<DataPath>
+							<flag>Computed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>//Stanislaus R at Ripon/Flow//1HOUR/%%Fpart%%/</DSS_Path>
+							<DSS_Filename>%%ModelDSS%%</DSS_Filename>
+							<omitvalue>0.0</omitvalue>
+						</DataPath>
+						<DataPath>
+							<flag>Observed</flag>
+							<Parameter>flow</Parameter>
+							<Interval>1DAY</Interval>
+							<Type>PER-AVER</Type>
+							<DSS_Path>/USBR/STAN_R_11303000_RIPON/FLOW//15MIN/GRAB2/</DSS_Path>
+							<DSS_Filename>%%observedDir%%/USBR_Stanislaus_grab2_DSSv6.dss</DSS_Filename>
+							<omitvalue>-901.0</omitvalue>
+						</DataPath>
+					</DataPaths>
+				</Object>	
 			</Section>
 
 
